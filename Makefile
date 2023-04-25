@@ -8,6 +8,7 @@ ARCH = noarch
 # Variables for clean build directory tree under repository
 BUILDDIR = ./build
 ARTIFACTDIR = ./artifacts
+DESTDIR ?= /
 SDISTDIR = ${ARTIFACTDIR}/sdist
 WHEELDIR = ${ARTIFACTDIR}/wheels
 RPMBUILDDIR = ${BUILDDIR}/rpm-build
@@ -61,6 +62,7 @@ build: clean manpage
 install: build
 	install -m 0755 -o plight -g plight -d ${DESTDIR}/var/lib/${PACKAGE}
 	install -m 0755 -o plight -g plight -d ${DESTDIR}/var/log/${PACKAGE}
+	install -m 0755 -o plight -g plight -d ${DESTDIR}/var/run/${PACKAGE}
 	${PYTHON} setup.py install -f --root ${DESTDIR}
 	mv ${DESTDIR}/etc/init.d/plightd.init ${DESTDIR}/etc/init.d/plightd
 
@@ -76,6 +78,7 @@ uninstall: clean
 	rm -f ${DESTDIR}/usr/bin/${PACKAGE}
 	rm -rf ${DESTDIR}/var/lib/${PACKAGE}
 	rm -rf ${DESTDIR}/var/log/${PACKAGE}
+	rm -rf ${DESTDIR}/var/run/${PACKAGE}
 	rm -rf ${DESTDIR}/usr/lib/python*/site-packages/${PACKAGE}*
 
 uninstall_rpms: clean
