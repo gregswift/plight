@@ -1,3 +1,8 @@
+%if 0%{?rhel} == 5 || 0%{?rhel} == 6
+%define __python /usr/bin/python2
+%else
+%define __python /usr/bin/python3
+%endif
 %{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 
 %{!?__initddir: %define __initddir /etc/rc.d/init.d}
