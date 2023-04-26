@@ -19,11 +19,11 @@ try:
 except ImportError:
     import http.server as BaseHTTPServer
     from http.server import test as http_server_test
-    from http.server import SimpleHTTPRequestHandler
+    from http.server import BaseHTTPRequestHandler
 
 import plight.config as plconfig
 
-class StatusHTTPRequestHandler(SimpleHTTPRequestHandler, object):
+class StatusHTTPRequestHandler(BaseHTTPRequestHandler, object):
 
     """Status HTTP Request handler
 
@@ -92,6 +92,7 @@ class StatusHTTPRequestHandler(SimpleHTTPRequestHandler, object):
             code = status.get_state_detail('code')
             message = status.get_state_detail('message')
             self.send_response(code, message)
+            self.end_headers()
 
     def do_HEAD(self):
         """Handle HEAD requests
